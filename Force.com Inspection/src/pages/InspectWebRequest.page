@@ -1,0 +1,105 @@
+<apex:page contentType="text/html" sidebar="false" showHeader="false" title="Inspection">
+	<html>
+<head>
+<meta http-equiv="content-language" content="ja" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-style-type" content="text/css" />
+<apex:includeScript value="http://code.jquery.com/jquery-1.7.2.min.js" />
+<style type="text/css">
+input[type=text] {
+	width: 680px;
+}
+
+textarea {
+	width: 680px;
+	height: 200px;
+}
+
+table {
+	font-size: 10pt;
+}
+
+.container {
+	margin-left: 200px;
+}
+</style>
+<script>
+	var Inspect = {
+		name : "Inspect",
+		stub : function() {
+			console.debug(this, arguments)
+		},
+		webServiceHandler : function(event) {
+			var url = "./InspectPage?url=" + encodeURI($("#url").val());
+
+			$("#response").val("");
+			var start = +new Date();
+			$.ajax(url, {
+				cache : false,
+				success : function(data) {
+					var end = +new Date();
+					$("#response").val(data);
+					var resultobj = $.parseJSON(data);
+					var $log = $("#responselog");
+					var $tr = $("<tr>")
+					$tr.append($("<td>").text(end - start));
+					$tr.append($("<td>").text(data.length + "(" + (data.length / 1024 + "").slice(0, 6) + "kb)"));
+					$log.find("th[prop]").each(function() {
+						var $this = $(this);
+						var jsonpath = $this.attr("prop").split("/");
+						var targetobj = resultobj;
+						for ( var index in jsonpath) {
+							targetobj = targetobj[jsonpath[index]];
+						}
+						var $td = $("<td>");
+						$td.text(targetobj);
+						$tr.append($td);
+					});
+					$log.find("tbody").append($tr);
+
+				},
+				complete : Inspect.stub,
+				error : Inspect.stub
+			});
+		},
+		init : function() {
+			$("#callWebServiceHandler").click(this.webServiceHandler);
+		}
+	};
+	$(function() {
+		Inspect.init();
+	})
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1>request url</h1>
+		<div class="section">
+			<input type="text" id="url" value="http://ec2-175-41-226-165.ap-northeast-1.compute.amazonaws.com/misc/randomdata?kbSize=10" /> <input type="button" value="execute" id="callWebServiceHandler" />
+		</div>
+		<div class="section">
+			<h1>response</h1>
+			<table id="responselog">
+				<thead>
+					<tr>
+						<th class="time">ajax(ms)</th>
+						<th class="responseLength">response length</th>
+						<th prop="0/exec/name">処理</th>
+						<th prop="0/cost">時間(ms)</th>
+						<th prop="0/exec/url">CallOutUrl</th>
+						<th prop="1/exec/name">処理</th>
+						<th prop="1/cost">時間(ms)</th>
+						<th prop="1/exec/jsStringLength">JSON length</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<h1>response body</h1>
+			<div>
+				<textarea id="response"></textarea>
+			</div>
+		</div>
+	</div>
+</body>
+	</html>
+</apex:page>

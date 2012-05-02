@@ -1,0 +1,1 @@
+<apex:page controller="InspectCtler" sidebar="false" contentType="text/plain">{!dataString}</apex:page>
