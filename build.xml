@@ -8,10 +8,6 @@
 		<sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" deployRoot="src" runAllTests="true" checkOnly="true" />
 	</target>
 
-	<target name="test">
-		<echo message="${sf.username}"/>
-	</target>
-	
 	<!-- Retrieve the information of all items of a particular metadata type -->
 	<target name="listMetadata">
 		<sf:listMetadata username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" metadataType="${sf.metadataType}" />
