@@ -175,7 +175,7 @@ public with sharing class InspectCtler {
 			String test = ctler.dataString;
 		}catch(Exception ex){
 		}
-		//System.assertEquals(true, false);
+		System.assertEquals(true, false);
 	}
 	
 }
