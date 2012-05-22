@@ -1,0 +1,7 @@
+<apex:page showheader="false" controller="OLB_SampleCtrler" action="{!init}">
+
+	<a href="SiteLogout">ログアウト</a>
+	<br />
+{!sample}
+
+</apex:page>

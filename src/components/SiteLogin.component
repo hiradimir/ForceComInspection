@@ -8,7 +8,8 @@
         <apex:outputLabel value="{!$Label.site.password}" for="password"/>
         <apex:inputSecret id="password" value="{!password}"/>
         <apex:outputText value=""/>
-        <apex:commandButton action="{!login}" value="{!$Label.site.login_button}" id="loginButton"/>
+        <apex:commandButton action="{!login}" value="{!$Label.site.login_button}" id="loginButton" rendered="{!!force}"/>
+        <apex:commandButton action="{!forcelogin}" value="{! '強制' + $Label.site.login_button}" id="forceLoginButton" rendered="{!force}"/>
         <apex:outputText value=""/>
         <apex:outputText value=""/>
         <apex:outputText value=""/>

@@ -1,0 +1,11 @@
+<apex:page showheader="false" controller="OLB_LogoutCtrler">
+	<head>
+<meta http-equiv="Refresh" content="5, URL={!$Site.Prefix}/apex/OLB_Sample" />
+	</head>
+	<body>
+		<iframe src="{!$Site.Prefix}/secur/logout.jsp" width="100%" height="0"></iframe>
+		別の端末からログインされました。
+		<br /> ログインしなおしてください
+		<br /> 5秒後に<a href="{!$Site.Prefix}/apex/OLB_Sample">OLB_Sample</a>に飛びます
+	</body>
+</apex:page>
