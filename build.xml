@@ -1,11 +1,21 @@
-<project name="Sample usage of Salesforce-CI Ant tasks" default="deployForCI" basedir="." xmlns:sfc="antlib:com.salesforce.ci">
+<project name="Sample usage of Salesforce-CI Ant tasks" default="deployForCI" basedir="." xmlns:sfc="antlib:com.yutagithub.sforce.ci" xmlns:sf="antlib:com.salesforce">
 
 	<property file="build.properties" />
 	<property environment="env" />
 
 	<!-- Build / TestResult never actually saves to the server -->
+	<target name="deploy">
+		<sf:deploy username="${env.sfdc_username}" password="${env.sfdc_passphrase}" serverurl="${sf.serverurl}" deployRoot="src"/>
+	</target>
+
+	<!-- Build / TestResult never actually saves to the server -->
 	<target name="deployForCI">
-		<sfc:deployForCI username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" deployRoot="src" />
+		<sfc:deployForCI username="${env.sfdc_ci_username}" password="${env.sfdc_ci_passphrase}" serverurl="${sf.serverurl}" deployRoot="src"/>
+	</target>
+
+	<!-- Build / TestResult never actually saves to the server -->
+	<target name="deployForJenkins">
+		<sfc:deployForCI username="${env.sfdc_ci_username}" password="${env.sfdc_ci_passphrase}" serverurl="${sf.serverurl}" deployRoot="src" sobjectPlural="true"/>
 	</target>
 
 </project>
